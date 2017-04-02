@@ -1,0 +1,5 @@
+@import "react-toolbox/lib/button/theme.css";
+
+.button {
+  background-color: var(--palette-red-50) !important;
+}
