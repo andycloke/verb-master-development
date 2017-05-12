@@ -1,0 +1,46 @@
+.row, .bottomrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-top: -1px;
+  height: 47px;
+}
+.bottomrow {
+  border-bottom: none;
+}
+.left {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+.center {
+  flex: 3;
+  display: flex;
+  justify-content: flex-start;
+}
+.right {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 550px) {
+  .toprow {
+    border-top: none;
+  }   
+  .left {
+    flex: 1;
+  }
+  .right {
+    flex: 1;
+  }
+}
+
+.tooltipInner {
+  font-size: 18px;
+  line-height: 20px;
+  padding: 10px;
+}

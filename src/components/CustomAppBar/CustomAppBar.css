@@ -1,0 +1,11 @@
+@import "react-toolbox/lib/app_bar/theme.css";
+
+.appBar {
+  background-color: #f44242;
+  box-shadow: none!important;
+}
+@media(max-width: 550px) {
+  .appBar {  
+    height: 56px!important;
+  }
+}

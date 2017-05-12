@@ -1,0 +1,33 @@
+.conjugationsContainer {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ max-width: 500px;
+ margin: 20px auto;
+ font-size: 17px;
+ background: red;
+}
+@media(max-width: 550px) {
+  .conjugationsContainer {
+    margin: 1px auto 0;    
+  }
+}
+.conjRow {
+ flex: 1;
+ display: flex;
+ padding: 0.9rem 0 0.9rem 1.1rem;
+ border: 1px solid #eaeaea;
+ background: rgb(250, 250, 250);
+ margin-top: -1px;
+ height: 50px;
+}
+.conjRowHighlight {
+  background: #FFF;
+  font-weight: bold;
+}
+.personCell {
+  flex: 1;
+}
+.conjugationCell {
+  flex: 3;
+}

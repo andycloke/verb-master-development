@@ -1,0 +1,8 @@
+react-redux-toolbox-starter@0.0.1 /Users/andycloke/coding/spanish/react/test
+├── UNMET PEER DEPENDENCY eslint@3.19.0
+└─┬ save@2.3.0 
+  ├── async@1.5.2 
+  ├── lodash.assign@4.2.0 
+  └─┬ mingo@0.6.5 
+    └── underscore@1.8.3 
+

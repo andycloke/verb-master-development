@@ -1,0 +1,15 @@
+@import "react-toolbox/lib/dropdown/theme.css";
+.dropdown {
+  width: 140px;
+}
+.dropdown li {
+  color: #333;
+}
+.dropdown input {
+  color: white;
+  font-weight: bold;
+}
+
+
+
+

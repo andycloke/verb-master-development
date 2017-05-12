@@ -1,0 +1,28 @@
+.tensesCont {
+  position: absolute;
+  top: 0;
+}
+.gameCont {
+  position: fixed;
+  top: 64px;
+  width: 100%;
+}
+@media (min-width: 960px) {
+  .gameCont {
+    width: calc(100% - 256px);
+  }
+}
+
+@media (min-width: 550px) {
+  .gameCont {
+    position: fixed;
+    top: 74px;
+  }
+}
+
+.cont {
+  position: relative;
+  background-color: #FFF;
+  padding-top: 0;
+  padding-right: 0;
+}

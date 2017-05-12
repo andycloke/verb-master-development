@@ -1,0 +1,31 @@
+.cont {
+  width: 100%;
+  height: 18px;
+  z-index: 300;
+  position: fixed;
+  top: 59px;
+  padding: 5px 0;
+  z-index: 300;
+}
+
+@media(max-width: 550px) {
+  .cont {
+    top: 51px;
+  }
+}
+
+.barWrapper {
+  background-color: #bc2121;
+  width: 100%;
+  height: 8px;
+}
+
+.bar {
+  background-color: #ffcf5e;
+  box-shadow: 1px 0 8px 0 #ffb93b;
+  height: 100%;
+  transition: width 400ms ease-out 100ms;
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  z-index: 301;
+}
