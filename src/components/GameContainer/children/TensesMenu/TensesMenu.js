@@ -44,7 +44,7 @@ class TensesMenu extends React.Component {
                   <a
                     className={styles.cardLink}
                     target="_blank"
-                    href="https://andycloke.github.io/">
+                    href="https://github.com/andycloke/verb-master-development">
                     Github
                   </a>
                 </span>}
