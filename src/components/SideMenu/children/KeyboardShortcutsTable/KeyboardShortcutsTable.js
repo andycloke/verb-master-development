@@ -13,19 +13,33 @@ const letterMap = {
 
 class KeyboardShortcutsTable extends React.Component {
   render() {
-    const ShortcutsTable = Object.keys(letterMap).map((letter) =>
+    const KeyboardShortcuts = Object.keys(letterMap).map((letter) =>
       <ListItem
         key={letter}
         caption={`Shift - ${letter}`}
         rightActions={[
-          <span key={1}>{letterMap[letter]} </span>,
+          <span key={letter}>{letterMap[letter]} </span>,
         ]}
       />
     );
     return (
       <List >
         <ListSubHeader caption={this.props.language === 'ENG' ? 'Keyboard Shortcuts' : 'Atajos de Teclado'} />
-        {ShortcutsTable}
+        {KeyboardShortcuts}
+        <ListItem
+          key={4353452}
+          caption="⏎"
+          rightActions={[
+            <span key={1}>{this.props.language === 'ENG' ? 'Submit Answer' : 'Entrega respuesta'} </span>,
+          ]}
+        />
+        <ListItem
+          key={4320853405}
+          caption="Esc"
+          rightActions={[
+            <span key={1}>{this.props.language === 'ENG' ? 'Quit' : 'Deja'} </span>,
+          ]}
+        />
       </List>
     );
   }

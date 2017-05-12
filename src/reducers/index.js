@@ -5,7 +5,7 @@ const initialState = {
   showEngInf: true,                 // whether or not to show english infinitive
   playing: false,                   // whether or not game is currently open
   questionComplete: false,          // has current question been answered correctly? 
-  targetScore: 1,                   // the target no. of questions that need to be answered correctly
+  targetScore: 15,                   // the target no. of questions that need to be answered correctly
   score: 0,                         // the no. of questions the user has answered correctly (in current game)
   totalQuestionsAnswered: 0,        // used for stats some time in the future
   firstEverGame: true,              // used to show help on first every game

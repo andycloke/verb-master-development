@@ -18,15 +18,20 @@ class GameTable extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-    if ((this.props.gameOpen !== nextProps.gameOpen && nextProps.gameOpen) && this.props.firstEverGame) {
-      // game starts and first ever attempt
-      // set 2 timeouts, each of which clicks on the div to show tooltip and updates state, also set 2 to click again to hide tooltip
-      this.setState({
-        verbTooltipOpener: window.setTimeout(() => this.props.gameOpen && this.refs.verbTooltip.click(), 1000),
-        verbTooltipCloser: window.setTimeout(() => this.props.gameOpen && this.refs.verbTooltip.click(), 3500),
-        tenseTooltipOpener: window.setTimeout(() => this.props.gameOpen && this.refs.tenseTooltip.click(), 3500),
-        tenseTooltipCloser: window.setTimeout(() => this.props.gameOpen && this.refs.tenseTooltip.click(), 6000),
-      });
+    if (this.props.gameOpen !== nextProps.gameOpen && nextProps.gameOpen) {
+      this.refs.message.innerHTML = '';
+      // game starts
+      if (this.props.firstEverGame) {
+        // first ever attempt
+        // set 2 timeouts, each of which clicks on the div to show tooltip and updates state, 
+        // also set 2 to click again to hide tooltip
+        this.setState({
+          verbTooltipOpener: window.setTimeout(() => this.props.gameOpen && this.refs.verbTooltip.click(), 1000),
+          verbTooltipCloser: window.setTimeout(() => this.props.gameOpen && this.refs.verbTooltip.click(), 3500),
+          tenseTooltipOpener: window.setTimeout(() => this.props.gameOpen && this.refs.tenseTooltip.click(), 3500),
+          tenseTooltipCloser: window.setTimeout(() => this.props.gameOpen && this.refs.tenseTooltip.click(), 6000),
+        });
+      }
     } else if (this.props.gameOpen !== nextProps.gameOpen && !nextProps.gameOpen) {
       // game closing
       // clear timeouts
@@ -34,6 +39,10 @@ class GameTable extends React.Component {
       window.clearTimeout(this.state.verbTooltipCloser);
       window.clearTimeout(this.state.tenseTooltipOpener);
       window.clearTimeout(this.state.tenseTooltipCloser);
+      if (nextProps.score === nextProps.targetScore) {
+        // game complete, show well done message
+        this.refs.message.innerHTML = nextProps.language === 'ENG' ? 'Well Done!' : '¡Bien Hecho!';
+      }
     }
   }
   render() {
@@ -68,6 +77,7 @@ class GameTable extends React.Component {
             <p className={style.infoText}>{language === 'ENG' ? 'Verb' : 'Verbo'}</p>
           </div>
           <div className={style.center}>
+            <div ref="message"></div>
             {gameOpen &&
               <TooltipDiv
                 theme={style}

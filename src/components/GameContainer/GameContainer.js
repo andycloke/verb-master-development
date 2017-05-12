@@ -27,14 +27,13 @@ class GameContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((this.props !== nextProps && !nextProps.gameOpen) && nextProps.score === nextProps.targetScore) {
+    if ((this.props !== nextProps && !nextProps.gameOpen) && (nextProps.score === nextProps.targetScore && nextProps.score)) {
       // game complete, delay before closing
-      this.setState({ transition: 'transform 350ms ease-out 500ms' });
+      this.setState({ transition: 'transform 350ms ease-out 1200ms' });
     } else {
       this.setState({ transition: 'transform 350ms ease-out' });
     }
   }
-
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
   }

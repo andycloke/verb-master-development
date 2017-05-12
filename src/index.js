@@ -4,10 +4,18 @@ import { render } from "react-dom";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Router, hashHistory } from "react-router";
+// import ReactGA from 'react-ga';
+
 
 import routes from "./client/routes";
-
 import spanishApp from './reducers';
+
+// ReactGA.initialize('UA-99045445-1');
+
+// function logPageView() {
+//   ReactGA.set({ page: window.location.pathname + window.location.search });
+//   ReactGA.pageview(window.location.pathname + window.location.search);
+// }
 
 const store = createStore(
   spanishApp,

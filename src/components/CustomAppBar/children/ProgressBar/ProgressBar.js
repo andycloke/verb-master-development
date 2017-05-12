@@ -20,7 +20,7 @@ class ProgressBar extends React.Component {
     }
     if (((this.props.playing !== nextProps.playing) && (nextProps.score === nextProps.targetScore)) && nextProps.score !== 0) {
       // finished game, slow down transition and make progress bar 0
-      setTimeout(() => this.setState({ percentageWidth: 0, progressBarStyles: { transitionDuration: '1500ms' }, }), 500);
+      setTimeout(() => this.setState({ percentageWidth: 0, progressBarStyles: { transitionDuration: '1500ms' }, }), 2000);
     }
   }
   render() {
