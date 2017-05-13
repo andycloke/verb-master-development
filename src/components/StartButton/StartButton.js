@@ -31,7 +31,7 @@ class StartButton extends React.Component {
       // no people selected
       this.setState({ label: this.props.language === 'ENG' ? 'Select some people' : 'Selecciona unas personas', showSnackbar: true });
     } else if (this.props.tenses.every((obj) => !obj.inPlay || obj.tense.slice(0, 3) === 'Imp')
-      && this.props.people.every((obj) => !obj.inPlay || (obj.person === 'p1' || obj.person === 's1'))) {
+      && this.props.people.every((obj) => !obj.inPlay || (obj.person === 'yo' || obj.person === 'ns'))) {
       // no people suitable for imperative tenses
       this.setState({ label: this.props.language === 'ENG' ? 'Select more people or tenses' : 'Selecciona mas personas o tiempos', showSnackbar: true });
     } else {

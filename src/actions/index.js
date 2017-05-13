@@ -99,7 +99,7 @@ export function newQuestion(people, tenses, score, targetScore) {
     // imperative tense selected so avoid first person
     do {
       person = randomInPlayValue('person', people);
-    } while (person === 'p1' || person === 's1');
+    } while (person === 'yo' || person === 'ns');
   } else {
     // random
     person = randomInPlayValue('person', people);

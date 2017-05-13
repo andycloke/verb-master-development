@@ -8,7 +8,7 @@ class Conjugations extends React.Component {
   renderConjugations() {
     const { people, displayConjugations } = this.props;
     const { person, personLonghand, conjugations } = this.props.currentQuestion;
-    // map of shorthand people to full length e.g. 's1' -> 'Yo'
+    // map of shorthand people to full length e.g. 'ns' -> 'Nosotros'
     const peopleMap = {};
     for (let i = 0; i < people.length; i += 1) {
       // for person used in current question, keep the longhand person name consistent with that used in the question. otherwise use a random one.

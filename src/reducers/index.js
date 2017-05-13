@@ -23,37 +23,37 @@ const initialState = {
   },
   people: [
     {
-      person: 's1',
+      person: 'yo',
       eng: ['I'],
       esp: ['Yo'],
       inPlay: true,
     },
     {
-      person: 's2',
+      person: 'tu',
       eng: ['You'],
       esp: ['Tú'],
       inPlay: true,
     },
     {
-      person: 's3',
+      person: 'el',
       eng: ['He', 'She', 'You (formal)'],
-      esp: ['El', 'Ella', 'Usted'],
+      esp: ['Él', 'Ella', 'Usted'],
       inPlay: true,
     },
     {
-      person: 'p1',
+      person: 'ns',
       eng: ['We'],
       esp: ['Nosotros', 'Nosotras'],
       inPlay: true,
     },
     {
-      person: 'p2',
+      person: 'vs',
       eng: ['You (plural, informal)'],
       esp: ['Vosotros', 'Vosotras'],
       inPlay: false,
     },
     {
-      person: 'p3',
+      person: 'ellos',
       eng: ['They', 'You (plural, formal)'],
       esp: ['Ellos', 'Ellas'],
       inPlay: true,
@@ -88,7 +88,7 @@ const initialState = {
       toReviewVerbs: [],
     },
     {
-      tense: 'In Cond',
+      tense: 'Cond Cond Pres',
       eng: 'Conditional',
       esp: 'Conditional',
       inPlay: false,
@@ -142,7 +142,7 @@ const initialState = {
       toReviewVerbs: [],
     },
     {
-      tense: 'In Cond Per',
+      tense: 'Cond Cond Per',
       eng: 'Conditional Perfect',
       esp: 'Conditional Perfecto',
       inPlay: false,
