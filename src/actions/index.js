@@ -84,10 +84,8 @@ function randomValidVerb(array = [], verbSettings) {
         )
       );
     } else {
-      const availableVerbsArray = verbSettings.userDefinedVerbs.replace(/ /g, '').split(',');
-      availableVerbs = array.filter((verbObj) => availableVerbsArray.includes(verbObj.inf));
+      availableVerbs = verbSettings.validUserVerbs;
     }
-    console.log(availableVerbs.length);
     if (availableVerbs.length) {
       return availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
     }
@@ -114,7 +112,13 @@ export function setWhichVerbs(option) {
 }
 
 export function setUserDefinedVerbs(verbsString) {
-  return { type: ActionTypes.SET_USER_DEFINED_VERBS, verbsString };
+  const validverbs = VERB_DATA.filter((verbObj) => verbsString.replace(/ /g, '').split(',').includes(verbObj.inf));
+  console.log(validverbs);
+  return {
+    type: ActionTypes.SET_USER_DEFINED_VERBS,
+    verbsString,
+    validUserVerbs: VERB_DATA.filter((verbObj) => verbsString.replace(/ /g, '').split(',').includes(verbObj.inf)),
+  };
 }
 
 export function togglePerson(person) {

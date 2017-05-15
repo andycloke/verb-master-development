@@ -1,4 +1,5 @@
 import { ActionTypes, Languages, VerbInclusionOptions, WhichVerbsOptions } from '../actions';
+import VERB_DATA from '../data';
 
 const initialState = {
   language: Languages.ENG,                              // language used in titles/ menu etc
@@ -7,7 +8,8 @@ const initialState = {
     whichVerbs: WhichVerbsOptions.COMMON,                 // which verbs to play with
     irregularVerbs: VerbInclusionOptions.INCLUDE, // play with irregular verbs
     reflexiveVerbs: VerbInclusionOptions.INCLUDE, // play with reflexive verbs
-    userDefinedVerbs: 'estar, hacer, tomar,',             // user chosen verbs to practise with
+    userVerbsString: '',            // user chosen verbs to practise with
+    validUserVerbs: [],        // verbs from the string input that are actual verbs and there is data for
   },
   playing: false,                                       // whether or not game is currently open
   questionComplete: false,                              // has current question been answered correctly? 
@@ -200,11 +202,19 @@ export default function spanishApp(state = initialState, action) {
   case ActionTypes.SET_WHICH_VERBS:
     return { ...state, verbSettings: { ...state.verbSettings, whichVerbs: action.option }};
   case ActionTypes.SET_USER_DEFINED_VERBS:
-    return { ...state, verbSettings: { ...state.verbSettings, userDefinedVerbs: action.verbsString }}
+    return { 
+      ...state, 
+      verbSettings: 
+      { 
+        ...state.verbSettings, 
+        userVerbsString: action.verbsString,
+        validUserVerbs: action.validUserVerbs,
+      }
+    };
   case ActionTypes.SET_REFLEXIVE:
-    return { ...state, verbSettings: { ...state.verbSettings, reflexiveVerbs: action.option }}
+    return { ...state, verbSettings: { ...state.verbSettings, reflexiveVerbs: action.option }};
   case ActionTypes.SET_IRREGULAR:
-    return { ...state, verbSettings: { ...state.verbSettings, irregularVerbs: action.option }}
+    return { ...state, verbSettings: { ...state.verbSettings, irregularVerbs: action.option }};
   case ActionTypes.TOGGLE_PERSON:
     return {
       ...state,

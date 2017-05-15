@@ -21,7 +21,7 @@ import styles from './VerbOptions.css';
 class VerbOptions extends React.Component {
   render() {
     const { language, setWhichVerbsClick, changeUserDefinedVerbs, setReflexiveVerbs, setIrregularVerbs } = this.props;
-    const { userDefinedVerbs, irregularVerbs, reflexiveVerbs, whichVerbs } = this.props.verbSettings;
+    const { userVerbsString, irregularVerbs, reflexiveVerbs, whichVerbs } = this.props.verbSettings;
     const { ALL, COMMON, USER_DEFINED } = WhichVerbsOptions;
     const { INCLUDE, EXCLUDE, ONLY } = VerbInclusionOptions;
     return (
@@ -98,7 +98,8 @@ class VerbOptions extends React.Component {
                     key={1}
                     label={language === 'ENG' ? 'Choose:' : 'Elige:'}
                     type="text"
-                    value={userDefinedVerbs}
+                    value={userVerbsString}
+                    placeholder="tener, estar,"
                     onChange={(verbsString) => changeUserDefinedVerbs(verbsString)}
                   />
                 ]}

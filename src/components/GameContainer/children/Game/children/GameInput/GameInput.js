@@ -90,13 +90,13 @@ class GameInput extends React.Component {
       e.preventDefault();
       this.addLetter(letterMap[e.key]);
     } else if (this.state.keysPressed.Enter) {
-      e.preventDefault();
       this.handleSubmitButtonClick();
+      window.setTimeout(() => this.refs.input.blur());
     }
   }
   handleKeyUp(e) {
     this.setState({ keysPressed: { ...this.state.keysPressed, [e.key]: false } });   // set property for key that was pressed to false
-  }
+ }
 
   addLetter(letter) {
     const startSelection = this.refs.input.selectionStart;
@@ -115,10 +115,6 @@ class GameInput extends React.Component {
       // submit answer
       this.props.submitAns(currentQuestion, this.state.userAnswer, people, tenses);
       window.setTimeout(() => this.checkGameStillOpenAndFocusInput(), 100);
-    } else if (people.every((tenseObj) => !tenseObj.inPlay)) {
-      // no people selected
-      this.refs.input.blur();
-      this.setState({ showSnackbar: true });
     } else {
       // new question
       this.props.createNewQuestion(people, tenses, score, targetScore, verbSettings);

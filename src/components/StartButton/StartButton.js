@@ -6,7 +6,7 @@ import { Snackbar } from 'react-toolbox/lib/snackbar';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import MediaQuery from 'react-responsive';
 
-import { togglePlaying, newQuestion, resetScoreIfNec } from '../../actions';
+import { togglePlaying, newQuestion, resetScoreIfNec, WhichVerbsOptions } from '../../actions';
 
 class StartButton extends React.Component {
   constructor(props) {
@@ -34,6 +34,9 @@ class StartButton extends React.Component {
       && this.props.people.every((obj) => !obj.inPlay || (obj.person === 'yo' || obj.person === 'ns'))) {
       // no people suitable for imperative tenses
       this.setState({ label: this.props.language === 'ENG' ? 'Select more people or tenses' : 'Selecciona mas personas o tiempos', showSnackbar: true });
+    } else if (this.props.verbSettings.whichVerbs === WhichVerbsOptions.USER_DEFINED && !this.props.verbSettings.validUserVerbs.length) {
+      // no valid user defined verbs
+      this.setState({ label: this.props.language === 'ENG' ? 'Enter more verbs & check your spelling' : 'Introduce mas verbos y comproba la ortografía', showSnackbar: true });
     } else {
       this.props.resetScoreIfNec();
       this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore, this.props.verbSettings);
@@ -73,7 +76,7 @@ class StartButton extends React.Component {
             action="Dismiss"
             active={this.state.showSnackbar}
             label={this.state.label}
-            timeout={1500}
+            timeout={2500}
             onClick={this.closeSnackBar}
             onTimeout={this.closeSnackBar}
             type="warning"

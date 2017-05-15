@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import MediaQuery from 'react-responsive';
 
-
-import { togglePlaying, newQuestion, resetScoreIfNec } from '../../actions';
+import { togglePlaying, newQuestion, resetScoreIfNec, WhichVerbsOptions } from '../../actions';
 
 import TensesMenu from './children/TensesMenu/TensesMenu';
 import Game from './children/Game/Game';
@@ -44,17 +43,20 @@ class GameContainer extends React.Component {
     if (e.key === 'Enter' && !this.props.gameOpen) {
       if (this.props.tenses.every((tenseObj) => !tenseObj.inPlay) && this.props.people.every((tenseObj) => !tenseObj.inPlay)) {
         // no tenses or people selected selected, so show snackbar warning
-        this.setState({ label: 'Select some people and tenses ', showSnackbar: true });
+        this.setState({ label: this.props.language === 'ENG' ? 'Select some people and tenses' : 'Selecciona unas personas y unos tiempos', showSnackbar: true });
       } else if (this.props.tenses.every((tenseObj) => !tenseObj.inPlay)) {
         // no tenses selected
-        this.setState({ label: 'Select some tenses', showSnackbar: true });
+        this.setState({ label: this.props.language === 'ENG' ? 'Select some tenses' : 'Selecciona unos tiempos', showSnackbar: true });
       } else if (this.props.people.every((tenseObj) => !tenseObj.inPlay)) {
         // no people selected
-        this.setState({ label: 'Select some people', showSnackbar: true });
+        this.setState({ label: this.props.language === 'ENG' ? 'Select some people' : 'Selecciona unas personas', showSnackbar: true });
       } else if (this.props.tenses.every((obj) => !obj.inPlay || obj.tense.slice(0, 3) === 'Imp')
         && this.props.people.every((obj) => !obj.inPlay || (obj.person === 'yo' || obj.person === 'ns'))) {
         // no people suitable for imperative tenses
-        this.setState({ label: 'Select more people or tenses', showSnackbar: true });
+        this.setState({ label: this.props.language === 'ENG' ? 'Select more people or tenses' : 'Selecciona mas personas o tiempos', showSnackbar: true });
+      } else if (this.props.verbSettings.whichVerbs === WhichVerbsOptions.USER_DEFINED && !this.props.verbSettings.validUserVerbs.length) {
+        // no valid user defined verbs
+        this.setState({ label: this.props.language === 'ENG' ? 'Enter more verbs & check your spelling' : 'Introduce mas verbos y comproba la ortografía', showSnackbar: true });
       } else {
         e.preventDefault();
         this.props.resetScoreIfNec();
@@ -88,7 +90,7 @@ class GameContainer extends React.Component {
           action="Dismiss"
           active={this.state.showSnackbar}
           label={this.state.label}
-          timeout={1500}
+          timeout={2500}
           onClick={this.closeSnackBar}
           onTimeout={this.closeSnackBar}
           type="warning"
