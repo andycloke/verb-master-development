@@ -8,3 +8,7 @@
 .input {
   padding: 20px 0 0;
 }
+
+.input, .bar, .inputElement {
+  width: 150%;
+}

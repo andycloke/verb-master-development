@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { Button } from 'react-toolbox/lib/button';
+import FontIcon from 'react-toolbox/lib/font_icon';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
 import Tooltip from 'react-toolbox/lib/tooltip';
 
@@ -30,6 +32,8 @@ class GameInput extends React.Component {
       personTooltipCloser: {},
       submitbtnOpener: {},
       submitbtnCloser: {},
+      thumbsUpStyle: style.feedbackIconGreen + ' ' + style.hidden,
+      icon: 'thumb_up',
     };
     this.handleSubmitButtonClick = this.handleSubmitButtonClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -96,7 +100,7 @@ class GameInput extends React.Component {
   }
   handleKeyUp(e) {
     this.setState({ keysPressed: { ...this.state.keysPressed, [e.key]: false } });   // set property for key that was pressed to false
- }
+  }
 
   addLetter(letter) {
     const startSelection = this.refs.input.selectionStart;
@@ -112,11 +116,20 @@ class GameInput extends React.Component {
   handleSubmitButtonClick() {
     const { displayConjugations, people, tenses, currentQuestion, score, targetScore, verbSettings } = this.props;
     if (!displayConjugations) {
+      if (currentQuestion.answers.includes(this.state.userAnswer.toLowerCase())) {
+        // answer correct - show thumbs up
+        this.setState({ icon: 'thumb_up', thumbsUpStyle: style.feedbackIconGreen + ' ' + style.inline });
+        window.setTimeout(() => this.setState({ thumbsUpStyle: style.feedbackIconGreen + ' ' + style.hidden }), 1000);
+      } else {
+        // answer correct - show thumbs up
+        this.setState({ icon: 'thumb_down', thumbsUpStyle: style.feedbackIconRed + ' ' + style.inline });
+        window.setTimeout(() => this.setState({ thumbsUpStyle: style.feedbackIconRed + ' ' + style.hidden }), 1000);
+      }
       // submit answer
       this.props.submitAns(currentQuestion, this.state.userAnswer, people, tenses);
       window.setTimeout(() => this.checkGameStillOpenAndFocusInput(), 100);
     } else {
-      // new question
+      // close conugations and fire new question
       this.props.createNewQuestion(people, tenses, score, targetScore, verbSettings);
       this.setState({
         userAnswer: this.refs.input.value = '',
@@ -173,6 +186,9 @@ class GameInput extends React.Component {
               autoCapitalize="off"
               spellCheck="false"
             />
+            <div className={style.iconWrapper}>
+              <FontIcon className={this.state.thumbsUpStyle} value={this.state.icon} />
+            </div>
           </div>
           <div className={style.right}>
             {gameOpen &&

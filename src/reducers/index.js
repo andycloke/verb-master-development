@@ -1,5 +1,4 @@
 import { ActionTypes, Languages, VerbInclusionOptions, WhichVerbsOptions } from '../actions';
-import VERB_DATA from '../data';
 
 const initialState = {
   language: Languages.ENG,                              // language used in titles/ menu etc
@@ -15,6 +14,8 @@ const initialState = {
   questionComplete: false,                              // has current question been answered correctly? 
   targetScore: 15,                                      // the target no. of questions that need to be answered correctly
   score: 0,                                             // the no. of questions the user has answered correctly (in current game)
+  incorrect: 0,                                         // no. answered wrong in current game
+  questionsAnswered: 0,                                 // total answered in current round
   totalQuestionsAnswered: 0,                            // used for stats some time in the future
   firstEverGame: true,                                  // used to show help on first every game
   displayConjugations: false,                           // whether or not conjugation table is displayed
@@ -196,11 +197,16 @@ export default function spanishApp(state = initialState, action) {
   case ActionTypes.TOGGLE_PLAYING:
     return { ...state, playing: !state.playing };  
   case ActionTypes.RESET_SCORE_IF_NEC:
-    return { ...state, score: state.score === state.targetScore ? 0 : state.score, };
+    return { 
+      ...state, 
+      score: state.score === state.targetScore ? 0 : state.score, 
+      incorrect: state.score === state.targetScore ? 0 : state.incorrect, 
+      questionsAnswered: state.score === state.targetScore ? 0 : state.questionsAnswered, 
+    };
   case ActionTypes.TOGGLE_ENG_INF:
     return { ...state, showEngInf: !state.showEngInf };
   case ActionTypes.SET_WHICH_VERBS:
-    return { ...state, verbSettings: { ...state.verbSettings, whichVerbs: action.option }};
+    return { ...state, verbSettings: { ...state.verbSettings, whichVerbs: action.option } };
   case ActionTypes.SET_USER_DEFINED_VERBS:
     return { 
       ...state, 
@@ -212,9 +218,9 @@ export default function spanishApp(state = initialState, action) {
       }
     };
   case ActionTypes.SET_REFLEXIVE:
-    return { ...state, verbSettings: { ...state.verbSettings, reflexiveVerbs: action.option }};
+    return { ...state, verbSettings: { ...state.verbSettings, reflexiveVerbs: action.option } };
   case ActionTypes.SET_IRREGULAR:
-    return { ...state, verbSettings: { ...state.verbSettings, irregularVerbs: action.option }};
+    return { ...state, verbSettings: { ...state.verbSettings, irregularVerbs: action.option } };
   case ActionTypes.TOGGLE_PERSON:
     return {
       ...state,
@@ -266,6 +272,7 @@ export default function spanishApp(state = initialState, action) {
           ...state,
           firstEverGame: false,
           score: state.score + 1,
+          questionsAnswered: state.questionsAnswered + 1,
           totalQuestionsAnswered: state.totalQuestionsAnswered + 1,
           playing: (state.score + 1) !== state.targetScore,         // quit game     
           questionComplete: true,
@@ -287,6 +294,7 @@ export default function spanishApp(state = initialState, action) {
         ...state,
         firstEverGame: false,        
         score: state.score + 1,
+        questionsAnswered: state.questionsAnswered + 1,        
         totalQuestionsAnswered: state.totalQuestionsAnswered + 1,
         playing: (state.score + 1) !== state.targetScore,         // quit game     
         questionComplete: true,
@@ -294,14 +302,22 @@ export default function spanishApp(state = initialState, action) {
     }
     // answer was incorrect
     if (tensesObj.toReviewVerbs.includes(currentQuestion.verbEsp)) {
-      // verb already needed to be reviewed - do nothing
-      return { ...state, firstEverGame: false, displayConjugations: true };
+      // verb already needed to be reviewed 
+      return {
+        ...state, 
+        questionsAnswered: state.questionsAnswered + 1,
+        incorrect: state.incorrect + 1,
+        firstEverGame: false,
+        displayConjugations: true 
+      };
     }
     // verb didn't need to be reviewed (i.e. it was the first time it had been shown)
     return {
       ...state,
       firstEverGame: false,
       displayConjugations: true,
+      questionsAnswered: state.questionsAnswered + 1,      
+      incorrect: state.incorrect + 1,
       currentQuestion: { ...state.currentQuestion },
       tenses: state.tenses.map((tense) => {
         if (tense.tense === currentQuestion.tense) {

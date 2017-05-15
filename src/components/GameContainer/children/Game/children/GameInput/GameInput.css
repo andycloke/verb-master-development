@@ -7,8 +7,10 @@
     max-width: 600px;
     outline: none;
     font-size: 1.2rem;
-    letter-spacing: 1px;
-    border: 1px solid #999;
+    border-left: 1px solid #999;
+    border-right: none;
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #999;
     padding-left: 8px;
 }
   
@@ -16,4 +18,29 @@
     padding-bottom: 5px;
     text-transform: lowercase;
     margin: 5px;
+}
+
+.iconWrapper {
+    height: 47px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #999;
+}
+
+.feedbackIconGreen {
+    color: #22bf65;
+}
+
+.feedbackIconRed {
+    color: #b74343;
+}
+.hidden {
+    display: none;
+}
+.inline {
+    display: inline;
 }

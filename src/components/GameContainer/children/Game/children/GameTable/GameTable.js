@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MediaQuery from 'react-responsive';
+
 import Tooltip from 'react-toolbox/lib/tooltip';
+import Avatar from 'react-toolbox/lib/avatar';
+import Chip from 'react-toolbox/lib/chip';
 
 import style from './GameTable.css';
 
@@ -46,7 +48,7 @@ class GameTable extends React.Component {
     }
   }
   render() {
-    const { showEngInf, language, gameOpen } = this.props;
+    const { showEngInf, language, gameOpen, score, incorrect } = this.props;
     const { verbEng, verbEsp, tenseLonghandEng, tenseLonghandEsp } = this.props.currentQuestion;
     return (
       <div>
@@ -67,10 +69,12 @@ class GameTable extends React.Component {
               </TooltipDiv>
             }
           </div>
-          <MediaQuery query="(min-device-width: 550px)">
             <div className={style.right}>
+              <Chip>
+                <Avatar className={style.icon + ' ' + style.correctIcon} icon="done" />
+                <span>{score}</span>
+              </Chip>
             </div>
-          </MediaQuery>
         </div>
         <div className={style.row}>
           <div className={style.left}>
@@ -90,10 +94,12 @@ class GameTable extends React.Component {
               </TooltipDiv>
             }
           </div>
-          <MediaQuery query="(min-device-width: 550px)">
             <div className={style.right}>
+              <Chip>
+                <Avatar className={style.icon + ' ' + style.inCorrectIcon} icon="close" />
+                <span>{incorrect}</span>
+              </Chip>
             </div>
-          </MediaQuery>
         </div>
       </div>
     );
@@ -105,7 +111,10 @@ const mapStateToProps = (state) => ({
   showEngInf: state.showEngInf,
   firstEverGame: state.firstEverGame,
   gameOpen: state.playing,
+  score: state.score,
+  incorrect: state.incorrect,
 });
 export default connect(
   mapStateToProps
 )(GameTable);
+

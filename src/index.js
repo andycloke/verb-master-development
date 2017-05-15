@@ -24,6 +24,6 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <Router history={hashHistory} routes={routes} onUpdate={logPageView}  />
+    <Router history={hashHistory} routes={routes} onUpdate={logPageView} />
   </Provider>
   , document.getElementById('app'));

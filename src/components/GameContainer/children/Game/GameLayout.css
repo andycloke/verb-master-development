@@ -2,12 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 17px;
+  font-size: 18px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   margin-top: -1px;
   height: 47px;
 }
+/*@media (min-width: 550px) {
+  .row, .bottomrow {
+  font-size: 18px;
+  height: 60px;
+}
+}*/
 .bottomrow {
   border-bottom: none;
 }
@@ -15,6 +21,7 @@
   flex: 2;
   display: flex;
   justify-content: center;
+  border-left: 1px solid #eee;
 }
 .center {
   flex: 3;
@@ -25,6 +32,7 @@
   flex: 2;
   display: flex;
   justify-content: center;
+  border-right: 1px solid #eee;
 }
 
 @media (max-width: 550px) {

@@ -1,6 +1,8 @@
 .container {
     width: 100%;
     padding-top: 48px;
+    max-width: 850px;
+    margin: 0 auto;
 }
 @media (max-width: 550px) {
     .container {

@@ -36,8 +36,6 @@ export const VerbInclusionOptions = {
   ONLY: 'ONLY',
 };
 
-
-
 // Helper - return a random value for a particular object key.
 // from all objects that are 'inplay'
 function randomInPlayValue(key, array) {

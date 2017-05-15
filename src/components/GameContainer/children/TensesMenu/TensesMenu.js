@@ -10,9 +10,8 @@ import styles from './TensesMenu.css';
 class TensesMenu extends React.Component {
   render() {
     const TenseCards = this.props.tenses.map((tense) =>
-      <div className={styles.tenseCardCont}>
+      <div key={tense.tense} className={styles.tenseCardCont}>
         <TenseCard
-          key={tense.tense}
           caption={this.props.language === 'ENG' ? tense.eng : tense.esp}
           checked={tense.inPlay}
           examples={tense.examples}
