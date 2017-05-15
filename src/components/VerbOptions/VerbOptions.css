@@ -1,4 +1,4 @@
-.tenseCardCont {
+.optionsCont {
   width: 33%;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
@@ -7,18 +7,13 @@
 } 
 
 @media (max-width: 1100px) {
-  .tenseCardCont {
+  .optionsCont {
     width: 50%;
   }
 }
 
 @media (max-width: 550px) {
-  .tenseCardCont {
+  .optionsCont {
     width: 100%;
   }
-}
-
-.cardLink {
-  text-decoration: none;  
-  font-size: 14px;
 }

@@ -39,7 +39,7 @@ class GameInput extends React.Component {
   componentWillReceiveProps(nextProps) {
     if ((this.props !== nextProps && nextProps.questionComplete) && (nextProps.score !== nextProps.targetScore)) {
       // answer was correct and not the end of round, so create new question
-      this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore);
+      this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore, this.props.verbSettings);
       this.setState({
         userAnswer: this.refs.input.value = '',
       });
@@ -110,7 +110,7 @@ class GameInput extends React.Component {
   }
 
   handleSubmitButtonClick() {
-    const { displayConjugations, people, tenses, currentQuestion, score, targetScore } = this.props;
+    const { displayConjugations, people, tenses, currentQuestion, score, targetScore, verbSettings } = this.props;
     if (!displayConjugations) {
       // submit answer
       this.props.submitAns(currentQuestion, this.state.userAnswer, people, tenses);
@@ -121,7 +121,7 @@ class GameInput extends React.Component {
       this.setState({ showSnackbar: true });
     } else {
       // new question
-      this.props.createNewQuestion(people, tenses, score, targetScore);
+      this.props.createNewQuestion(people, tenses, score, targetScore, verbSettings);
       this.setState({
         userAnswer: this.refs.input.value = '',
       });
@@ -230,14 +230,15 @@ const mapStateToProps = (state) => ({
   score: state.score,
   targetScore: state.targetScore,
   firstEverGame: state.firstEverGame,
+  verbSettings: state.verbSettings,
 });
 const mapDispatchToProps = (dispatch) =>
   ({
     submitAns: (currentQuestion, userAnswer, people, tenses) => {
       dispatch(submitAnswer(currentQuestion, userAnswer, people, tenses));
     },
-    createNewQuestion: (people, tenses, score, targetScore) => {
-      dispatch(newQuestion(people, tenses, score, targetScore));
+    createNewQuestion: (people, tenses, score, targetScore, verbSettings) => {
+      dispatch(newQuestion(people, tenses, score, targetScore, verbSettings));
     }
   });
 export default connect(

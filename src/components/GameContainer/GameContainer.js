@@ -2,11 +2,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Snackbar } from 'react-toolbox/lib/snackbar';
+import MediaQuery from 'react-responsive';
+
 
 import { togglePlaying, newQuestion, resetScoreIfNec } from '../../actions';
 
 import TensesMenu from './children/TensesMenu/TensesMenu';
 import Game from './children/Game/Game';
+import VerbOptions from '../VerbOptions/VerbOptions';
 
 import style from './GameContainer.css';
 
@@ -38,7 +41,7 @@ class GameContainer extends React.Component {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
   handleKeyDown(e) {
-    if ((e.key === ' ' || e.key === 'Enter') && !this.props.gameOpen) {
+    if (e.key === 'Enter' && !this.props.gameOpen) {
       if (this.props.tenses.every((tenseObj) => !tenseObj.inPlay) && this.props.people.every((tenseObj) => !tenseObj.inPlay)) {
         // no tenses or people selected selected, so show snackbar warning
         this.setState({ label: 'Select some people and tenses ', showSnackbar: true });
@@ -56,7 +59,7 @@ class GameContainer extends React.Component {
         e.preventDefault();
         this.props.resetScoreIfNec();
         this.props.toggleGameOpen();
-        this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore);
+        this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore, this.props.verbSettings);
       }
     } else if (e.key === 'Escape' && this.props.gameOpen) {
       e.preventDefault();
@@ -74,6 +77,9 @@ class GameContainer extends React.Component {
       <div className={style.cont}>
         <div className={style.tensesCont} style={{ transition: this.state.transition, transform: `translateX(${tensesLeftOffset})` }} >
           <TensesMenu />
+          <MediaQuery query="(min-device-width: 550px)">
+            <VerbOptions />
+          </MediaQuery>
         </div>
         <div className={style.gameCont} style={{ transition: this.state.transition, transform: `translateX(${gameLeftOffset})` }} >
           <Game />
@@ -100,14 +106,15 @@ const mapStateToProps = (state) =>
     language: state.language,
     score: state.score,
     targetScore: state.targetScore,
+    verbSettings: state.verbSettings,
   });
 const mapDispatchToProps = (dispatch) =>
   ({
     toggleGameOpen: () => {
       dispatch(togglePlaying());
     },
-    createNewQuestion: (people, tenses, score, targetScore) => {
-      dispatch(newQuestion(people, tenses, score, targetScore));
+    createNewQuestion: (people, tenses, score, targetScore, verbSettings) => {
+      dispatch(newQuestion(people, tenses, score, targetScore, verbSettings));
     },
     resetScoreIfNec: () => {
       dispatch(resetScoreIfNec());

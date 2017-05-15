@@ -1,25 +1,31 @@
-import { ActionTypes, Languages } from '../actions';
+import { ActionTypes, Languages, VerbInclusionOptions, WhichVerbsOptions } from '../actions';
 
 const initialState = {
-  language: Languages.ENG,          // language used in titles/ menu etc
-  showEngInf: true,                 // whether or not to show english infinitive
-  playing: false,                   // whether or not game is currently open
-  questionComplete: false,          // has current question been answered correctly? 
-  targetScore: 15,                   // the target no. of questions that need to be answered correctly
-  score: 0,                         // the no. of questions the user has answered correctly (in current game)
-  totalQuestionsAnswered: 0,        // used for stats some time in the future
-  firstEverGame: true,              // used to show help on first every game
-  displayConjugations: false,       // whether or not conjugation table is displayed
+  language: Languages.ENG,                              // language used in titles/ menu etc
+  showEngInf: true,                                     // whether or not to show english infinitive
+  verbSettings: {
+    whichVerbs: WhichVerbsOptions.COMMON,                 // which verbs to play with
+    irregularVerbs: VerbInclusionOptions.INCLUDE, // play with irregular verbs
+    reflexiveVerbs: VerbInclusionOptions.INCLUDE, // play with reflexive verbs
+    userDefinedVerbs: 'estar, hacer, tomar,',             // user chosen verbs to practise with
+  },
+  playing: false,                                       // whether or not game is currently open
+  questionComplete: false,                              // has current question been answered correctly? 
+  targetScore: 15,                                      // the target no. of questions that need to be answered correctly
+  score: 0,                                             // the no. of questions the user has answered correctly (in current game)
+  totalQuestionsAnswered: 0,                            // used for stats some time in the future
+  firstEverGame: true,                                  // used to show help on first every game
+  displayConjugations: false,                           // whether or not conjugation table is displayed
   currentQuestion: {
-    verbEng: '',                    // verb in english
-    verbEsp: '',                    // verb in spanish
-    person: '',                     // shorthand person e.g. p1 for plural 1st person (we / nosotros)
-    personLonghand: '',             // e.g. one of el/ ella/ usted
-    tense: '',                      // shorthand tenses, e.g. In Pres for indicative present (also known as simply present)
-    tenseLonghandEng: '',           // English name for tense, e.g. Future
-    tenseLonghandEsp: '',           // Spanish name for tense, e.g. Futuro   
-    answers: [],                    // array of possible answers (needed because there occasionally are multiple possible answers)
-    conjugations: {},               // object showing conjugation of current verb in current tense
+    verbEng: '',                                        // verb in english
+    verbEsp: '',                                        // verb in spanish
+    person: '',                                         // shorthand person e.g. p1 for plural 1st person (we / nosotros)
+    personLonghand: '',                                 // e.g. one of el/ ella/ usted
+    tense: '',                                          // shorthand tenses, e.g. In Pres for indicative present (also known as simply present)
+    tenseLonghandEng: '',                               // English name for tense, e.g. Future
+    tenseLonghandEsp: '',                               // Spanish name for tense, e.g. Futuro   
+    answers: [],                                        // array of possible answers (needed because there occasionally are multiple possible answers)
+    conjugations: {},                                   // object showing conjugation of current verb in current tense
   },
   people: [
     {
@@ -191,6 +197,14 @@ export default function spanishApp(state = initialState, action) {
     return { ...state, score: state.score === state.targetScore ? 0 : state.score, };
   case ActionTypes.TOGGLE_ENG_INF:
     return { ...state, showEngInf: !state.showEngInf };
+  case ActionTypes.SET_WHICH_VERBS:
+    return { ...state, verbSettings: { ...state.verbSettings, whichVerbs: action.option }};
+  case ActionTypes.SET_USER_DEFINED_VERBS:
+    return { ...state, verbSettings: { ...state.verbSettings, userDefinedVerbs: action.verbsString }}
+  case ActionTypes.SET_REFLEXIVE:
+    return { ...state, verbSettings: { ...state.verbSettings, reflexiveVerbs: action.option }}
+  case ActionTypes.SET_IRREGULAR:
+    return { ...state, verbSettings: { ...state.verbSettings, irregularVerbs: action.option }}
   case ActionTypes.TOGGLE_PERSON:
     return {
       ...state,

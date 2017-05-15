@@ -1,0 +1,10 @@
+@import "react-toolbox/lib/input/theme.css";
+
+.label {
+  top: 10px;
+  color: rgb(33, 33, 33);
+}
+
+.input {
+  padding: 20px 0 0;
+}

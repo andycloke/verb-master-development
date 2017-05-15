@@ -4,6 +4,10 @@ import VERB_DATA from '../data';
 
 export const ActionTypes = {
   SET_LANGUAGE: 'SET_LANGUAGE',
+  SET_REFLEXIVE: 'SET_REFLEXIVE',
+  SET_IRREGULAR: 'SET_IRREGULAR',
+  SET_WHICH_VERBS: 'SET_WHICH_VERBS',
+  SET_USER_DEFINED_VERBS: 'SET_USER_DEFINED_VERBS',
   TOGGLE_PLAYING: 'TOGGLE_PLAYING',
   RESET_SCORE_IF_NEC: 'RESET_SCORE_IF_NEC',
   TOGGLE_ENG_INF: 'TOGGLE_ENG_INF',
@@ -19,6 +23,20 @@ export const Languages = {
   ENG: 'ENG',
   ESP: 'ESP'
 };
+
+export const WhichVerbsOptions = {
+  ALL: 'ALL',
+  COMMON: 'COMMON',
+  USER_DEFINED: 'USER_DEFINED',
+};
+
+export const VerbInclusionOptions = {
+  INCLUDE: 'INCLUDE',
+  EXCLUDE: 'EXCLUDE',
+  ONLY: 'ONLY',
+};
+
+
 
 // Helper - return a random value for a particular object key.
 // from all objects that are 'inplay'
@@ -43,15 +61,66 @@ function randomElement(array = []) {
   return '';
 }
 
+// Get a random verb from those available (as defined by the user)
+function randomValidVerb(array = [], verbSettings) {
+  let availableVerbs = [];
+  if (array.length) {
+    if (verbSettings.whichVerbs !== WhichVerbsOptions.USER_DEFINED) {
+      availableVerbs = array.filter((verbObj) =>
+        // filter for irregular verbs
+        ((((verbSettings.irregularVerbs === VerbInclusionOptions.INCLUDE
+          || (verbSettings.irregularVerbs === VerbInclusionOptions.EXCLUDE && !verbObj.irregular))
+          || (verbSettings.irregularVerbs === VerbInclusionOptions.ONLY && verbObj.irregular))
+          &&
+          // filter reflexive
+          ((verbSettings.reflexiveVerbs === VerbInclusionOptions.INCLUDE
+            || (verbSettings.reflexiveVerbs === VerbInclusionOptions.EXCLUDE && !verbObj.reflexivo))
+            || (verbSettings.reflexiveVerbs === VerbInclusionOptions.ONLY && verbObj.reflexivo))
+        )
+          &&
+          // filter common
+          (verbSettings.whichVerbs === WhichVerbsOptions.ALL
+            || (verbSettings.whichVerbs === WhichVerbsOptions.COMMON && verbObj.comun))
+        )
+      );
+    } else {
+      const availableVerbsArray = verbSettings.userDefinedVerbs.replace(/ /g, '').split(',');
+      availableVerbs = array.filter((verbObj) => availableVerbsArray.includes(verbObj.inf));
+    }
+    console.log(availableVerbs.length);
+    if (availableVerbs.length) {
+      return availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
+    }
+  }
+  return '';
+}
+
 // Action creators
 
 export function setLanguage(language) {
   return { type: ActionTypes.SET_LANGUAGE, language };
 }
 
+export function setReflexive(option) {
+  return { type: ActionTypes.SET_REFLEXIVE, option };
+}
+
+export function setIrregular(option) {
+  return { type: ActionTypes.SET_IRREGULAR, option };
+}
+
+export function setWhichVerbs(option) {
+  return { type: ActionTypes.SET_WHICH_VERBS, option };
+}
+
+export function setUserDefinedVerbs(verbsString) {
+  return { type: ActionTypes.SET_USER_DEFINED_VERBS, verbsString };
+}
+
 export function togglePerson(person) {
   return { type: ActionTypes.TOGGLE_PERSON, person };
 }
+
 
 export function togglePlaying() {
   return { type: ActionTypes.TOGGLE_PLAYING };
@@ -69,7 +138,7 @@ export function toggleTense(tense) {
   return { type: ActionTypes.TOGGLE_TENSE, tense };
 }
 
-export function newQuestion(people, tenses, score, targetScore) {
+export function newQuestion(people, tenses, score, targetScore, verbSettings) {
   // calculate how many verb-tense combos were wrong previously and store all the tenses
   let totalToReview = 0;
   const tensesWithVerbsToReview = [];
@@ -93,7 +162,7 @@ export function newQuestion(people, tenses, score, targetScore) {
     randomVerbTenseCombo = true;
   }
 
-  // start by choosing a random person
+  // choose a random person
   let person = '';
   if (tense.slice(0, 3) === 'Imp') {
     // imperative tense selected so avoid first person
@@ -119,8 +188,9 @@ export function newQuestion(people, tenses, score, targetScore) {
   let verbDataObj = {};
   if (tense) {
     if (randomVerbTenseCombo) {
-      // select random verbs (flat was set above to signal no previously-wrong tense-verb combos)
-      verbDataObj = randomElement(VERB_DATA);
+      // select random verb with those available due to on filters (flag was set above to signal no previously-wrong tense-verb 
+      // combos that would need to be reviewed instead)
+      verbDataObj = randomValidVerb(VERB_DATA, verbSettings);
     } else {
       // select random one from the tense's verbs that need to be reviewed
       const verb = randomElement(tenseObj.toReviewVerbs);

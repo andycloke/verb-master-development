@@ -36,7 +36,7 @@ class StartButton extends React.Component {
       this.setState({ label: this.props.language === 'ENG' ? 'Select more people or tenses' : 'Selecciona mas personas o tiempos', showSnackbar: true });
     } else {
       this.props.resetScoreIfNec();
-      this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore);
+      this.props.createNewQuestion(this.props.people, this.props.tenses, this.props.score, this.props.targetScore, this.props.verbSettings);
       this.props.toggleGameOpen();
     }
   }
@@ -93,14 +93,15 @@ const mapStateToProps = (state) =>
     language: state.language,
     score: state.score,
     targetScore: state.targetScore,
+    verbSettings: state.verbSettings,
   });
 const mapDispatchToProps = (dispatch) =>
   ({
     toggleGameOpen: () => {
       dispatch(togglePlaying());
     },
-    createNewQuestion: (people, tenses, score, targetScore) => {
-      dispatch(newQuestion(people, tenses, score, targetScore));
+    createNewQuestion: (people, tenses, score, targetScore, verbSettings) => {
+      dispatch(newQuestion(people, tenses, score, targetScore, verbSettings));
     },
     resetScoreIfNec: () => {
       dispatch(resetScoreIfNec());
